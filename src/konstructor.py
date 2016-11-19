@@ -455,7 +455,7 @@ class Utils:
             try:
                 if Platform.system == 'Windows':
                     os.rmdir(dst)
-                else: 
+                else:
                     os.unlink(dst)
             except:
                 Utils.exit("Can not unlink %s/%s. Manually rename or remove this file" % (os.getcwd(), dst))
@@ -748,11 +748,11 @@ class Dep:
                 if exists and not self.cache.get("%s-download" % (self.name)):
                     # Downloaded dir exists but no cache at all exists for this dep.
                     # The third-party/konstruct.cache file has been removed/corrupted
-                    # In such case we consider the dependency up to date, so 
+                    # In such case we consider the dependency up to date, so
                     # update the cache.
                     self.cache.setConfig(self.name + "-download", self.downloadConfig);
-                    Log.info("No cache found for \"%s\" but the directory \"%s\" " % (self.name, self.extractDir) + 
-                             "already exists. Not downloading again, use "+ 
+                    Log.info("No cache found for \"%s\" but the directory \"%s\" " % (self.name, self.extractDir) +
+                             "already exists. Not downloading again, use "+
                              "--force-download=%s to download again this dependency" % (self.name))
                 else:
                     Log.debug("Need download because configuration for '%s/%s' is new" % (cache["config"], self.name))
@@ -851,7 +851,7 @@ class Dep:
         if self.linkDir and not os.path.islink(self.linkDir["dest"]):
             if Utils.promptYesNo("The dependency %s has been updated, download the updated version ? (the directory %s will be removed)" % (self.name, self.extractDir)):
                 Log.debug("Removing %s" % (self.linkDir["dest"]))
-                shutil.rmtree(self.linkDir["dest"])
+                shutil.rmtree(self.linkDir["dest"], True)
             else:
                 Log.info("Skipping update of %s" % self.name)
                 return
